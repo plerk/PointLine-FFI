@@ -1,2 +1,4 @@
 /PointLine-FFI-*
 /.build
+/ffi/Cargo.lock
+/ffi/target

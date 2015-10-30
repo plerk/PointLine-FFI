@@ -1,0 +1,8 @@
+[package]
+name    = "pointline"
+version = "0.1.0"
+authors = ["Graham Ollis <plicease@cpan.org>"]
+
+[lib]
+name       = "pointline"
+crate-type = ["dylib"]
