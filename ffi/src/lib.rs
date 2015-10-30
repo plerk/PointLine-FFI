@@ -10,7 +10,7 @@ impl Line {
 }
 
 #[no_mangle]
-pub extern "C" fn point_new(x: i32, y: i32) -> Box<Point> {
+pub extern "C" fn point_new(_: *const u8, x: i32, y: i32) -> Box<Point> {
   Box::new(Point { x: x, y: y })
 }
 
@@ -31,7 +31,7 @@ pub extern "C" fn line_new(_: *const u8, p1: &Point, p2: &Point) -> Box<Line> {
 
 #[no_mangle]
 pub extern "C" fn line_p1(_self: &Line) -> Box<Point> {
-  Box::new(Point { x: _self.p1.x, y: _self.p2.y })
+  Box::new(Point { x: _self.p1.x, y: _self.p1.y })
 }
 
 #[no_mangle]

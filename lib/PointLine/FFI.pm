@@ -13,21 +13,38 @@ package PointLine::FFI {
   $ffi->package;
 
   package PointLine::FFI::Point {
+
+    $ffi->custom_type( Point => {
+      perl_to_native => sub {
+        ${$_[0]};
+      },
+      native_to_perl => sub {
+        bless \$_[0], __PACKAGE__;
+      },
+    });
   
-    $ffi->attach( [ point_new => 'new' ] => ['i32', 'i32'] => 'opaque' => sub {
-      my($xsub, $class, $x, $y) = @_;
-      my $self = $xsub->($x, $y);
-      bless \$self, $class;
+    $ffi->attach( [ point_new => 'new' ] => ['string','i32', 'i32'] => 'Point' );
+    
+    $ffi->attach( [ point_x => 'x' ] => ['Point'] => 'i32' );
+    $ffi->attach( [ point_y => 'y' ] => ['Point'] => 'i32' );
+  
+  }
+  
+  package PointLine::FFI::Line {
+  
+    $ffi->custom_type( Line => {
+      perl_to_native => sub {
+        ${$_[0]};
+      },
+      native_to_perl => sub {
+        bless \$_[0], __PACKAGE__;
+      },
     });
     
-    $ffi->attach( [ point_x => 'x' ] => ['opaque'] => 'i32' => sub {
-      my($xsub, $self) = @_;
-      $xsub->($$self);
-    });
-    $ffi->attach( [ point_y => 'y' ] => ['opaque'] => 'i32' => sub {
-      my($xsub, $self) = @_;
-      $xsub->($$self);
-    });
+    $ffi->attach( [ line_new => 'new'           ] => ['string','Point','Point'] => 'Line' );
+    $ffi->attach( [ line_p1 => 'p1'             ] => ['Line'] => 'Point' );
+    $ffi->attach( [ line_p2 => 'p2'             ] => ['Line'] => 'Point' );
+    $ffi->attach( [ line_distance => 'distance' ] => ['Line'] => 'f64' );
   
   }
 
